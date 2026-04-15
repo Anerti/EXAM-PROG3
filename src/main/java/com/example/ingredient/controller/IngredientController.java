@@ -4,10 +4,7 @@ import com.example.ingredient.dto.IngredientResponse;
 import com.example.ingredient.dto.StockMovementRequest;
 import com.example.ingredient.dto.StockMovementResponse;
 import com.example.ingredient.dto.StockResponse;
-import com.example.ingredient.entity.Ingredient;
-import com.example.ingredient.entity.MovementTypeEnum;
-import com.example.ingredient.entity.StockMovement;
-import com.example.ingredient.entity.Unit;
+import com.example.ingredient.entity.*;
 import com.example.ingredient.repository.IngredientRepository;
 import com.example.ingredient.validator.IngredientValidator;
 import org.springframework.http.ResponseEntity;
@@ -101,7 +98,7 @@ public class IngredientController {
         stockMovement.setType(MovementTypeEnum.valueOf(request.getType()));
         stockMovement.setCreationDatetime(request.getCreationDatetime() != null ? request.getCreationDatetime() : Instant.now());
 
-        var stockValue = new com.example.ingredient.entity.StockValue();
+        var stockValue = new StockValue();
         stockValue.setQuantity(request.getQuantity());
         stockValue.setUnit(Unit.valueOf(request.getUnit()));
         stockMovement.setValue(stockValue);

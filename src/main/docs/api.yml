@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  title: Ingredient specifications
+servers:
+  - url: http://127.0.0.1:8080
+paths:
+  /ingredients/{id}:
+    get:
+      description: return information about the specified ingredient according to his id in the database.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: get information about the ingredient.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  category:
+                    type: string
+                  price:
+                    type: number
+        '404':
+          description: not found.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /ingredients/{id}/stock:
+    get:
+      description: return the stock quantity of the specified ingredient at a given time.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: at
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+          description: temporal point for stock retrieval (ISO 8601 format).
+        - name: unit
+          in: query
+          required: false
+          schema:
+            type: string
+          description: unit of measurement for the stock quantity.
+      responses:
+        '200':
+          description: stock quantity retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ingredientId:
+                    type: integer
+                  quantity:
+                    type: number
+                  unit:
+                    type: string
+                  at:
+                    type: string
+                    format: date-time
+        '404':
+          description: ingredient not found.
+          content:
+            text/plain:
+              schema:
+                type: string
